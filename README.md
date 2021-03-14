@@ -14,3 +14,20 @@
 * basket.
 * Event bus (RabbitMQ).
 * Client.
+
+### models
+| product        | type |
+|----------------|---|
+| id             | PK, serial |
+| name           | String |
+| stock          | INTEGER |
+| price          | FLOAT |
+| Description    | String |
+
+| basket         | type |
+|----------------|---|
+| id             | PK, serial |
+| productId      | INTEGER |
+| productName    | String |
+| price          | FLOAT |
+| quantity       | INTEGER |
