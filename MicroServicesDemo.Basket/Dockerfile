@@ -7,7 +7,7 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:5.0-buster-slim AS build
 WORKDIR /src
-COPY ["MicroServicesDemo.Basket/MicroServicesDemo.Basket.csproj", "MicroServicesDemo.Basket/"]
+COPY ["MicroServicesDemo.Basket.csproj", "MicroServicesDemo.Basket/"]
 RUN dotnet restore "MicroServicesDemo.Basket/MicroServicesDemo.Basket.csproj"
 COPY . .
 WORKDIR "/src/MicroServicesDemo.Basket"

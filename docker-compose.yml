@@ -20,13 +20,10 @@ services:
     restart: always
     ports:
       - 8080:8080
-  product-service:
-    image: products-service
+  busket-service:
+    image: busket-service
     build:
-      context: ./products
+      context: ./MicroServicesDemo.Basket
       dockerfile: Dockerfile
-    volumes:
-      - ./products:/usr/src/app
     ports:
-      - 3000:3000
-    command: ["npm", "run", "dev"]
+      - 49155:49155
