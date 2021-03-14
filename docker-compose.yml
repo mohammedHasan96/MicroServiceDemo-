@@ -1,0 +1,32 @@
+version: "2.2"
+
+services:
+  rabbitmq3:
+    image: rabbitmq:3.8.14-alpine
+    ports:
+      - 15672:15672
+      - 5672:5672
+  db:
+    image: postgres
+    restart: always
+    environment:
+      - POSTGRES_PASSWORD=example
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=postgres
+    volumes:
+      - ./postgres-data:/var/lib/postgresql/data
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
+  product-service:
+    image: products-service
+    build:
+      context: ./products
+      dockerfile: Dockerfile
+    volumes:
+      - ./products:/usr/src/app
+    ports:
+      - 3000:3000
+    command: ["npm", "run", "dev"]
