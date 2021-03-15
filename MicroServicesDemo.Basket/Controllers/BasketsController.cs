@@ -12,11 +12,11 @@ namespace MicroServicesDemo.Basket.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class BasketEntitiesController : ControllerBase
+    public class BasketsController : ControllerBase
     {
         private readonly BasketDbContext _context;
 
-        public BasketEntitiesController(BasketDbContext context)
+        public BasketsController(BasketDbContext context)
         {
             _context = context;
         }

@@ -21,9 +21,11 @@ services:
     ports:
       - 8080:8080
   busket-service:
+    environment:
+      - "ASPNETCORE_URLS=http://+"
     image: busket-service
     build:
-      context: ./MicroServicesDemo.Basket
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: MicroServicesDemo.Basket/Dockerfile
     ports:
-      - 49155:49155
+      - 8000:80

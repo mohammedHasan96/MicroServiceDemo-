@@ -2,12 +2,12 @@
 
 FROM mcr.microsoft.com/dotnet/aspnet:5.0-buster-slim AS base
 WORKDIR /app
-EXPOSE 80
-EXPOSE 443
+EXPOSE 5000
+EXPOSE 5001
 
 FROM mcr.microsoft.com/dotnet/sdk:5.0-buster-slim AS build
 WORKDIR /src
-COPY ["MicroServicesDemo.Basket.csproj", "MicroServicesDemo.Basket/"]
+COPY ["MicroServicesDemo.Basket/MicroServicesDemo.Basket.csproj", "MicroServicesDemo.Basket/"]
 RUN dotnet restore "MicroServicesDemo.Basket/MicroServicesDemo.Basket.csproj"
 COPY . .
 WORKDIR "/src/MicroServicesDemo.Basket"
