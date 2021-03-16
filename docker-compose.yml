@@ -48,3 +48,10 @@ services:
       dockerfile: Dockerfile
     ports:
       - 8081:8081
+  basket-service:
+    image: basket-service
+    build:
+      context: .
+      dockerfile: MicroServicesDemo.Basket/Dockerfile
+    ports:
+      - 80:80
