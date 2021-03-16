@@ -1,0 +1,83 @@
+{
+  "name": "products",
+  "version": "0.0.2",
+  "engines": {
+    "node": ">=10.16.3",
+    "npm": ">=6.13.1"
+  },
+  "author": {
+    "name": "Mohammed Naji",
+    "email": "mohammed@deepscribe.tech"
+  },
+  "browser": {
+    "child_process": false
+  },
+  "private": true,
+  "scripts": {
+    "migration": "set NODE_ENV=development&& babel-node ./migrations.js",
+    "seed": "babel-node ./seeders/seed.js",
+    "start": "set NODE_ENV=production&& node ./lib/bin/www",
+    "localtunnel": "set NODE_ENV=development&& babel-node ./localtunnel.js",
+    "build": "babel src -d lib ",
+    "starting": "./node_modules/.bin/babel ./src/bin/www",
+    "dev": "NODE_ENV=development&& nodemon --exec  babel-node  ./src/bin/www",
+    "dev:both": "set NODE_ENV=development&& concurrently --kill-others-on-fail \"cd client && npm run dev\" \"nodemon --exec babel-node ./src/bin/www \"",
+    "test": "set NODE_ENV=test && nyc --reporter=html --reporter=text ./node_modules/mocha/bin/mocha --timeout 100000 --exit ./test --require @babel/polyfill --require @babel/register ",
+    "client:init": "cd client && npm i",
+    "client:build": "cd client && npm run build",
+    "heroku-postbuild": "npm run build && npm run migration && npm run client:init && npm run client:build"
+  },
+  "dependencies": {
+    "@babel/cli": "^7.10.1",
+    "@babel/core": "^7.10.2",
+    "@babel/node": "^7.10.1",
+    "@babel/plugin-transform-runtime": "^7.10.1",
+    "@babel/polyfill": "^7.10.1",
+    "@babel/preset-env": "^7.10.2",
+    "@babel/register": "^7.10.1",
+    "@babel/runtime": "^7.10.2",
+    "@hapi/joi": "^17.1.1",
+    "@sentry/node": "^5.17.0",
+    "babel-plugin-module-resolver": "^4.0.0",
+    "concurrently": "^5.3.0",
+    "cookie-parser": "~1.4.5",
+    "cors": "^2.8.5",
+    "debug": "^4.1.1",
+    "dotenv": "^8.2.0",
+    "express": "~4.17.1",
+    "express-joi-validation": "^4.0.3",
+    "express-jwt": "^5.3.3",
+    "http-errors": "~1.7.3",
+    "http-status-codes": "^1.4.0",
+    "jsonwebtoken": "^8.5.1",
+    "morgan": "~1.10.0",
+    "node-fetch": "^2.6.0",
+    "pg": "^8.2.1",
+    "pg-hstore": "^2.3.3",
+    "sequelize": "^5.21.12",
+    "umzug": "^2.3.0",
+    "winston": "^3.2.1"
+  },
+  "devDependencies": {
+    "babel-register": "^6.26.0",
+    "chai": "^4.2.0",
+    "chai-http": "^4.3.0",
+    "chai-integer": "^0.1.0",
+    "eslint": "^7.2.0",
+    "eslint-config-airbnb": "^18.1.0",
+    "eslint-import-resolver-babel-module": "^5.1.2",
+    "eslint-plugin-import": "^2.21.2",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-react": "^7.20.0",
+    "kill-port": "^1.6.0",
+    "mocha": "^8.0.1",
+    "nodemon": "^2.0.7",
+    "nyc": "^15.1.0",
+    "sequelize-cli": "^6.2.0"
+  },
+  "nodemonConfig": {
+    "ignore": [
+      "./client/"
+    ]
+  }
+}

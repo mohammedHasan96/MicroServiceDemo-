@@ -15,11 +15,39 @@ services:
       - POSTGRES_DB=postgres
     volumes:
       - ./postgres-data:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
   adminer:
     image: adminer
     restart: always
     ports:
       - 8080:8080
+    depends_on:
+      - db
+  product-service:
+    image: products-service
+    build:
+      context: ./products
+      dockerfile: Dockerfile
+    volumes:
+      - ./products:/usr/src/app
+      - /usr/src/app/node_modules
+    environment:
+      - DATABASE_HOST=db
+      - DATABASE_PASSWORD=example
+      - DATABASE_USER=postgres
+      - DATABASE=postgres
+    ports:
+      - 3000:3000
+    depends_on:
+      - db
+  client-service:
+    image: client-service
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    ports:
+      - 8081:8081
   basket-service:
     image: basket-service
     build:

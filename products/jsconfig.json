@@ -1,0 +1,46 @@
+{
+  "compilerOptions": {
+    "baseUrl": "./src/",
+    "paths": {
+      "bin/*": [
+        "./bin/*"
+      ],
+      "config/*": [
+        "./config/*"
+      ],
+      "controllers/*": [
+        "./controllers/*"
+      ],
+      "database/*": [
+        "./database"
+      ],
+      "helpers/*": [
+        "./helpers"
+      ],
+      "logger/*": [
+        "./logger"
+      ],
+      "middleware/*": [
+        "./middleware"
+      ],
+      "models/*": [
+        "./models"
+      ],
+      "public/*": [
+        "./public"
+      ],
+      "services/*": [
+        "./services"
+      ],
+      "routes/*": [
+        "./routes"
+      ],
+      "validations/*": [
+        "./validations"
+      ],
+      "webhooks/*": [
+        "./webhooks"
+      ],
+    }
+  }
+}
