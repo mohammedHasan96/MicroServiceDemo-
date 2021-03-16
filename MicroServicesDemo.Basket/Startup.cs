@@ -47,18 +47,20 @@ namespace MicroServicesDemo.Basket
             });
             _logger.LogInformation("ConfigureServices => swagger added");
 
-            //services.AddEntityFrameworkNpgsql()
-            //   .AddDbContext<BasketDbContext>(options =>
-            //       options.UseNpgsql(Configuration.GetConnectionString("DefaultConnectionString")));
-
             _logger.LogInformation("ConfigureServices => adding context");
-            services.AddDbContext<BasketDbContext>(options => options.UseInMemoryDatabase("BasketDb"));
+            services.AddDbContext<BasketDbContext>(options =>
+                   options.UseNpgsql(Configuration.GetConnectionString("DefaultConnectionString")));
+            //services.AddDbContext<BasketDbContext>(options => options.UseInMemoryDatabase("BasketDb"));
             _logger.LogInformation("ConfigureServices => context added");
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, BasketDbContext dbContext)
         {
+            _logger.LogInformation("Configure => Migrating Database...");
+            dbContext.Database.Migrate();
+            _logger.LogInformation("Configure => Database Migrated");
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
