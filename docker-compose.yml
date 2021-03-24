@@ -6,6 +6,8 @@ services:
     ports:
       - 15672:15672
       - 5672:5672
+    volumes:
+      - "./rabbitmq3-data:/var/lib/rabbitmq/mnesia/"
   db:
     image: postgres
     restart: always
@@ -29,9 +31,10 @@ services:
     build:
       context: ./products
       dockerfile: Dockerfile
+      target: dev
     volumes:
-      - ./products:/usr/src/app
-      - /usr/src/app/node_modules
+      - ./products:/opt
+      - /opt/node_modules
     environment:
       - DATABASE_HOST=db
       - DATABASE_PASSWORD=example
