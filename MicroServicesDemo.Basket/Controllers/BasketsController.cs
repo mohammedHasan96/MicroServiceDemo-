@@ -21,52 +21,55 @@ namespace MicroServicesDemo.Basket.Controllers
             _context = context;
         }
 
-        // GET: api/BasketEntities
+        // GET: api/Baskets
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<BasketEntity>>> GetBaskets([FromQuery] string username)
+        public async Task<ActionResult<Wrapper<List<BasketEntity>>>> GetBaskets([FromQuery] string username)
         {
-            return await _context.Baskets.Where(x => username == null || x.UserName.ToLower() == username.ToLower()).ToListAsync();
+            return new Wrapper<List<BasketEntity>>
+            {
+                Data = await _context.Baskets.Where(x => username == null || x.UserName.ToLower() == username.ToLower()).ToListAsync(),
+                Success = true
+            };
         }
 
-        // GET: api/BasketEntities/5
+        // GET: api/Baskets/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<BasketEntity>> GetBasketEntity(int id)
+        public async Task<ActionResult<Wrapper<BasketEntity>>> GetBasketEntity(int id)
         {
             var basketEntity = await _context.Baskets.FindAsync(id);
 
             if (basketEntity == null)
             {
-                return NotFound();
+                return NotFound(new Wrapper<object> { Success = false });
             }
 
-            return basketEntity;
+            return new Wrapper<BasketEntity> { Data = basketEntity, Success = true };
         }
 
-        // POST: api/BasketEntities
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        // POST: api/Baskets
         [HttpPost]
-        public async Task<ActionResult<BasketEntity>> PostBasketEntity(BasketEntity basketEntity)
+        public async Task<ActionResult<Wrapper<BasketEntity>>> PostBasketEntity(BasketEntity basketEntity)
         {
             _context.Baskets.Add(basketEntity);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetBasketEntity", new { id = basketEntity.Id }, basketEntity);
+            return new Wrapper<BasketEntity> { Data = basketEntity, Success = true };
         }
 
-        // DELETE: api/BasketEntities/5
+        // DELETE: api/Baskets/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteBasketEntity(int id)
         {
             var basketEntity = await _context.Baskets.FindAsync(id);
             if (basketEntity == null)
             {
-                return NotFound();
+                return NotFound(new Wrapper<object> { Success = false });
             }
 
             _context.Baskets.Remove(basketEntity);
             await _context.SaveChangesAsync();
 
-            return NoContent();
+            return Ok(new Wrapper<object> { Success = true });
         }
     }
 }
