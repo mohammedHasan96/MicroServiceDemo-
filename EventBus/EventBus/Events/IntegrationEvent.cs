@@ -7,7 +7,7 @@ namespace Microsoft.eShopOnContainers.BuildingBlocks.EventBus.Events
     {
         public IntegrationEvent()
         {
-            Id = Guid.NewGuid();
+            Id = Guid.NewGuid().ToString();
             CreationDate = DateTime.UtcNow;
         }
 
