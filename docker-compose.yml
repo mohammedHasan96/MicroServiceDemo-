@@ -34,7 +34,7 @@ services:
       target: dev
     volumes:
       - ./products:/opt
-      - /opt/node_modules
+      - /node_modules
     environment:
       - DATABASE_HOST=db
       - DATABASE_PASSWORD=example
@@ -51,6 +51,17 @@ services:
       dockerfile: Dockerfile
     ports:
       - 8081:8081
+  react-service:
+    build:
+      context: ./client-react
+      dockerfile: Dockerfile
+      target: dev
+    ports: 
+      - "3002:3002"
+      - "80:80"
+    volumes:
+      - ./client-react/node_modules
+      - ./client-react:/app    
   basket-service:
     image: basket-service
     build:
