@@ -1,0 +1,34 @@
+.ant-form.form-fields {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, 340px);
+  gap: 16px;
+  max-width: 1170px;
+  width: 100%;
+  margin: 0 auto;
+  justify-content: center;
+
+  .ant-form-item {
+    margin-right: 0;
+    margin-bottom: 0;
+  }
+
+  .ant-input-number,
+  .ant-input {
+    width: 100%;
+  }
+
+  .submit-btn {
+    grid-column: 1;
+    grid-row: 0;
+  }
+}
+
+.homeNews {
+  grid-template-columns: repeat(auto-fit, 100%) !important;
+}
+
+.form-heading {
+  grid-column: 1/4;
+  border-bottom: 1px solid;
+  margin-bottom: 20px;
+}

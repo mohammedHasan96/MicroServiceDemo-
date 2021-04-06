@@ -1,0 +1,26 @@
+.drop-down {
+  width: 100%;
+  max-width: 320px;
+}
+
+.drop-down__span {
+  flex: none;
+  display: block;
+  padding: 8px;
+  cursor: pointer;
+}
+
+.drop-down__divider {
+  margin: 4px 0 !important;
+}
+
+.add-item__form {
+  display: flex;
+  
+  flex-wrap: nowrap;
+  padding: 8px;
+}
+
+.add-item__input {
+  flex: auto;
+}
