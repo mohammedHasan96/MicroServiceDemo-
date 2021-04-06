@@ -6,10 +6,15 @@ EXPOSE 5002
 
 FROM mcr.microsoft.com/dotnet/sdk:5.0-buster-slim AS build
 WORKDIR /src
+COPY ["MicroServicesDemo.sln", "."]
+COPY ["EventBus/EventBus/EventBus.csproj", "EventBus/EventBus/"]
+COPY ["EventBus/EventBusRabbitMQ/EventBusRabbitMQ.csproj", "EventBus/EventBusRabbitMQ/"]
 COPY ["MicroServicesDemo.Basket/MicroServicesDemo.Basket.csproj", "MicroServicesDemo.Basket/"]
-RUN dotnet restore "MicroServicesDemo.Basket/MicroServicesDemo.Basket.csproj"
+
+RUN dotnet restore "MicroServicesDemo.sln"
+
 COPY . .
-WORKDIR "/src/MicroServicesDemo.Basket"
+WORKDIR /src/MicroServicesDemo.Basket
 RUN dotnet build "MicroServicesDemo.Basket.csproj" -c Release -o /app/build
 
 FROM build AS publish
