@@ -1,0 +1,12 @@
+.main-container-cart {
+  margin: auto;
+  max-width: 1200px;
+  font-size: 2rem;
+  box-shadow: 30px 0px 40px rgba(0, 0, 0, 0.1), -30px 0px 40px rgba(0, 0, 0, 0.1);
+  background-color: white;
+  height: auto;
+  /* text-align: center; */
+}
+.demo-loadmore-list {
+  min-height: 350px;
+}
