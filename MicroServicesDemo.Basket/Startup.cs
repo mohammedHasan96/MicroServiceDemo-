@@ -53,6 +53,7 @@ namespace MicroServicesDemo.Basket
             });
 
             services.AddDbContext<BasketDbContext>(options =>
+                //options.UseInMemoryDatabase("DefaultDb"));
                 options.UseNpgsql(Configuration.GetConnectionString("DefaultConnectionString")));
 
             services.AddSingleton<IRabbitMQPersistentConnection>(sp => GetDefaultRabbitMQPersistentConnection(sp));
@@ -98,6 +99,7 @@ namespace MicroServicesDemo.Basket
         {
             var logger = sp.GetRequiredService<ILogger<DefaultRabbitMQPersistentConnection>>();
             var settings = sp.GetService<EventBusSettings>();
+            _logger.LogInformation($"EventBusSettings => {Newtonsoft.Json.JsonConvert.SerializeObject(settings)}");
             var factory = new ConnectionFactory()
             {
                 HostName = settings.EventBusConnection,
@@ -136,6 +138,8 @@ namespace MicroServicesDemo.Basket
                 return new EventBusRabbitMQ(rabbitMQPersistentConnection, logger, iLifetimeScope, eventBusSubcriptionsManager, subscriptionClientName, retryCount);
             });
 
+            services.AddSingleton<IEventBusSubscriptionsManager, InMemoryEventBusSubscriptionsManager>();
+            services.AddTransient<ProductChangedIntegrationEventHandler>();
         }
 
         private void ConfigureEventBus(IApplicationBuilder app)
