@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import getFields from './fields';
-import Form from 'componets/Form';
+import Form from 'components/Form';
 
 function ProductCU() {
   const { fields, initialValues } = getFields();

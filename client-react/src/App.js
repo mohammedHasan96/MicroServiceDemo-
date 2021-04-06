@@ -1,7 +1,7 @@
 import React, { Suspense } from 'react';
 import { Switch, Route } from 'react-router-dom';
 import { Spin } from 'antd';
-import NavBar from './componets/NavBar';
+import NavBar from './components/NavBar';
 import 'antd/dist/antd.css';
 import './App.css';
 
