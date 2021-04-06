@@ -10,13 +10,14 @@ import http from 'http';
 import config from 'config';
 import logger from 'logger';
 import initializeDatabase from 'database';
-import migrations from '../../migrations';
-console.log('inti, inti', migrations);
+import migrations from '../migrations';
 import serverBoot from '../app';
+import setupEventBus from 'helpers/eventBus';
+
 serverBoot().then((app) => {
   const { Port } = config;
 
-  debug('scopal:server');
+  debug('microServiceDemo:server');
   /**
    * Get port from environment and store in Express.
    */
@@ -82,10 +83,11 @@ serverBoot().then((app) => {
     logger.info(`Listening on ${bind}`);
   };
   logger.info(`force ${force}`);
-  migrations().then(() =>
-    initializeDatabase.sequelize.sync({ force })
-  )
-    .then(() => {
+  // migrations()
+  Promise.resolve()
+    .then(() => initializeDatabase.sequelize.sync({ force }))
+    .then(() => setupEventBus())
+    .then(async () => {
       server.listen(port);
       server.on('error', onError);
       server.on('listening', onListening);

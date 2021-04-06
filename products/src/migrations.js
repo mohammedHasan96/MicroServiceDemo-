@@ -1,7 +1,7 @@
 import { Sequelize } from 'sequelize';
 import Umzug from 'umzug';
 import dotenv from 'dotenv';
-import config from './src/config';
+import config from './config';
 dotenv.config('./.env');
 // load the right .env.APP_ENV in local development
 const {
@@ -11,8 +11,7 @@ const {
     }
   }
 } = config;
-console.log('process.env.NODE_ENV', DATABASE, DATABASE_USER);
-
+console.log("DATABASE", DATABASE, DATABASE_USER);
 if (!DATABASE) throw new Error('You have to set NODE_ENV');
 
 const sequelize = new Sequelize(
@@ -60,6 +59,7 @@ const migrations = async () => {
   try {
     console.log('Migrations started');
     await umzug.up();
+    console.log('Seeders started');
     return await seeders.up();
   } catch (error) {
     console.log('error => ', error);

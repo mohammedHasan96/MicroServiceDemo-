@@ -1,6 +1,7 @@
 
 import { productsServices } from 'services';
 import { dto, httpResponse } from 'helpers';
+import { publishMessage } from 'helpers/eventBus';
 
 export const listAllProducts = async (request, response, _next, transaction) => {
   const products = await productsServices.getAllProducts(transaction);
@@ -62,15 +63,14 @@ export const updateProducts = async (request, response, _next, transaction) => {
   const [count] = await productsServices.updateProduct(filter, productData, transaction);
 
   let data = {};
+  data = await productsServices.getProduct(filter, transaction);
   if (count) {
-    data = await productsServices.getProduct(filter, transaction);
-    // public event to event bus
-    const message = {
-      event: 'animale',
-      body: {
-        msg: 'i like you',
-      }
-    };
+    const dataValue = data.get({
+      plain: true
+    })
+    delete dataValue.createdAt;
+    delete dataValue.updatedAt;
+    await publishMessage(dataValue);
   }
   transaction.commit();
   return httpResponse.ok(response, data);

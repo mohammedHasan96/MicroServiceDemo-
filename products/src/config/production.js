@@ -21,12 +21,6 @@ export const config = {
       number: 2592000000,
     },
   },
-  s3OurBucket: {
-    accessKeyId: process.env.ACCESS_KEY_ID,
-    secretAccessKey: process.env.SECRET_ACCESS_KEY,
-    bucketNameOur: process.env.BUCKET_NAME_OUR,
-    bucketPublic: process.env.BUCKET_PUBLIC
-  },
   sessionConfig: {
     secret: '',
     resave: true,
@@ -35,19 +29,12 @@ export const config = {
       path: '/', httpOnly: false, secure: false
     }
   },
-  mailgun: {
-    apiKey: process.env.DEV_MAILGUN_api_key,
-    domain: process.env.DEV_MAILGUN_DOMAIN,
+  eventBus: {
+    exchangeName: 'Events',
+    exchangeType: 'fanout',
+    url: 'amqp://localhost',
+    queueForConsumer: '', // docker-compose service name
+    // isAutoDelete = false, durable = true
   },
-  paypal: {
-    clientId: process.env.DEV_PAYPAL_CLIENT_ID,
-    clientSecret: process.env.DEV_PAYPAL_CLIENT_SECRET
-  },
-  ayrshare: {
-    ayrshareApiKey: process.env.AYRSHARE_API_KEY,
-  },
-  mailchimp: {
-    mailchimpApiKey: process.env.AYRSHARE_API_KEY,
-  }
 };
 

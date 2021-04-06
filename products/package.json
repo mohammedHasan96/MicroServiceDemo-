@@ -14,13 +14,13 @@
   },
   "private": true,
   "scripts": {
-    "migration": "set NODE_ENV=development&& babel-node ./migrations.js",
+    "migration": "babel-node ./migrations.js",
     "seed": "babel-node ./seeders/seed.js",
-    "start": "set NODE_ENV=production&& node ./lib/bin/www",
+    "start": "set NODE_ENV=production&& node ./lib/src/bin/www",
     "localtunnel": "set NODE_ENV=development&& babel-node ./localtunnel.js",
-    "build": "babel src -d lib ",
+    "build": "babel src -d ./lib/src && babel migrations -d ./lib/migrations && babel seeders -d ./lib/seeders",
     "starting": "./node_modules/.bin/babel ./src/bin/www",
-    "dev": "NODE_ENV=development&& nodemon --exec  babel-node  ./src/bin/www",
+    "dev": "set NODE_ENV=development&& nodemon --exec  babel-node  ./src/bin/www",
     "dev:both": "set NODE_ENV=development&& concurrently --kill-others-on-fail \"cd client && npm run dev\" \"nodemon --exec babel-node ./src/bin/www \"",
     "test": "set NODE_ENV=test && nyc --reporter=html --reporter=text ./node_modules/mocha/bin/mocha --timeout 100000 --exit ./test --require @babel/polyfill --require @babel/register ",
     "client:init": "cd client && npm i",
@@ -38,6 +38,8 @@
     "@babel/runtime": "^7.10.2",
     "@hapi/joi": "^17.1.1",
     "@sentry/node": "^5.17.0",
+    "amqp-connection-manager": "^3.2.2",
+    "amqplib": "^0.7.1",
     "babel-plugin-module-resolver": "^4.0.0",
     "concurrently": "^5.3.0",
     "cookie-parser": "~1.4.5",
@@ -56,6 +58,7 @@
     "pg-hstore": "^2.3.3",
     "sequelize": "^5.21.12",
     "umzug": "^2.3.0",
+    "uuid": "^8.3.2",
     "winston": "^3.2.1"
   },
   "devDependencies": {
@@ -79,5 +82,8 @@
     "ignore": [
       "./client/"
     ]
+  },
+  "bin": {
+    "healthcheck": "./healthcheck.js"
   }
 }
