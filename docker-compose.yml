@@ -2,14 +2,14 @@ version: "2.2"
 
 services:
   rabbitmq3:
-    image: rabbitmq:3-management-alpine
+    image: rabbitmq:3.8.14-management-alpine
     ports:
       - 15672:15672
       - 5672:5672
     volumes:
       - "./rabbitmq3-data:/var/lib/rabbitmq/mnesia/"
   db:
-    image: postgres
+    image: postgres:13.2
     restart: always
     environment:
       - POSTGRES_PASSWORD=example
@@ -20,7 +20,7 @@ services:
     ports:
       - 5432:5432
   adminer:
-    image: adminer
+    image: adminer:4.8.0-standalone
     restart: always
     ports:
       - 8080:8080
@@ -44,6 +44,7 @@ services:
       - 3000:3000
     depends_on:
       - db
+      - rabbitmq3
   client-service:
     image: client-service
     build:
@@ -72,3 +73,4 @@ services:
       - 5002:5002
     depends_on:
       - db
+      - rabbitmq3
