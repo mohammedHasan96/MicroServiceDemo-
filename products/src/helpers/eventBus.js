@@ -33,6 +33,8 @@ export const publishMessage = (data, route) => {
   msg.senderId = 'product-service';
   msg.id = uuidv4();
   msg.creationDate = new Date();
+  msg.productId = data.id;
+  delete data.id;
   const publishedData = { ...msg, ...data };
   return channelWrapper.publish(exchangeName, route, publishedData);
 }
