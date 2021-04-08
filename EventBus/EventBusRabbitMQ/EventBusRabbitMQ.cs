@@ -20,7 +20,7 @@ namespace Microsoft.eShopOnContainers.BuildingBlocks.EventBusRabbitMQ
 {
     public class EventBusRabbitMQ : IEventBus, IDisposable
     {
-        string BROKER_NAME = "eshop_event_bus";
+        string BROKER_NAME = "Events";
         string AUTOFAC_SCOPE_NAME = "eshop_event_bus";
 
         private readonly IRabbitMQPersistentConnection _persistentConnection;
