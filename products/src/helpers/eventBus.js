@@ -18,9 +18,9 @@ const setupConnection = async () => {
     json: true,
     setup: function (channel) {
       return Promise.all([
-        channel.assertExchange(exchangeName, exchangeType, { durable: false, autoDelete: true }),
-        channel.assertQueue(queueForConsumer, { exclusive: true }),
-        channel.bindQueue(queueForConsumer, exchangeName, ""),
+        channel.assertExchange(exchangeName, exchangeType, { durable: false, autoDelete: false }),
+        // channel.assertQueue(queueForConsumer, { exclusive: true }),
+        // channel.bindQueue(queueForConsumer, exchangeName, ""),
       ]);
     }
   });
@@ -28,18 +28,13 @@ const setupConnection = async () => {
 };
 
 
-export const publishMessage = (data) => {
+export const publishMessage = (data, route) => {
   const msg = {};
   msg.senderId = 'product-service';
   msg.id = uuidv4();
-  msg.creationDate = Date.now();
-  msg.data = data;
-  return channelWrapper.publish(exchangeName, '', msg);
+  msg.creationDate = new Date();
+  const publishedData = { ...msg, ...data };
+  return channelWrapper.publish(exchangeName, route, publishedData);
 }
-
-/*
-* Services should be able to subscribe to multiple event.
-* all services that subscribe to the same event should get the event.
-*/
 
 export default setupConnection;

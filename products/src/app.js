@@ -3,7 +3,6 @@ import express from 'express';
 import logger from 'morgan';
 import v1Router from 'routes';
 import cookieParser from 'cookie-parser';
-import path from 'path';
 import fetch from 'node-fetch';
 
 global.fetch = fetch;
@@ -37,17 +36,6 @@ export default async () => {
   app.use(express.urlencoded({ extended: true }));
   app.use(cookieParser());
   app.use('/api/v1', v1Router);
-
-  if (process.env.NODE_ENV === 'production') {
-    // serve any static files
-    app.use(express.static(path.join(__dirname, '..', 'client', 'build')));
-
-    // Handle React routing, resturn all requests to React app
-    app.get('*', (req, res) => {
-      res.sendFile(path.join(__dirname, '..', 'client', 'build', 'index.html'));
-    });
-  }
-
 
   // catch 404 and forward to error handler
   app.use((req, res, next) => {

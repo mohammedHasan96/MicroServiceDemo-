@@ -22,7 +22,7 @@ export const config = {
   },
   eventBus: {
     exchangeName: 'Events',
-    exchangeType: 'fanout',
+    exchangeType: 'direct',
     url: 'amqp://rabbitmq3',
     queueForConsumer: '', // docker-compose service name
     // isAutoDelete = false, durable = true

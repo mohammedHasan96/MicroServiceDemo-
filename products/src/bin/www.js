@@ -83,10 +83,7 @@ serverBoot().then((app) => {
     logger.info(`Listening on ${bind}`);
   };
   logger.info(`force ${force}`);
-  // migrations()
-  Promise.resolve()
-    .then(() => initializeDatabase.sequelize.sync({ force }))
-    .then(() => setupEventBus())
+  Promise.all([initializeDatabase.sequelize.sync({ force }), migrations(), setupEventBus()])
     .then(async () => {
       server.listen(port);
       server.on('error', onError);

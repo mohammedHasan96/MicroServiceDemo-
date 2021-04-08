@@ -64,13 +64,14 @@ export const updateProducts = async (request, response, _next, transaction) => {
 
   let data = {};
   data = await productsServices.getProduct(filter, transaction);
+
   if (count) {
     const dataValue = data.get({
       plain: true
     })
     delete dataValue.createdAt;
     delete dataValue.updatedAt;
-    await publishMessage(dataValue);
+    await publishMessage(dataValue, 'ProductChangedIntegrationEvent');
   }
   transaction.commit();
   return httpResponse.ok(response, data);

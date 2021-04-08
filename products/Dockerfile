@@ -1,5 +1,5 @@
 ## Stage 1 (base)
-FROM node:10-alpine as base
+FROM node:12.22.1-alpine3.10 as base
 EXPOSE 3000
 ENV NODE_ENV=production
 WORKDIR /opt
@@ -10,10 +10,10 @@ RUN npm ci \
 ## Stage 2 (development)
 FROM base as dev
 ENV NODE_ENV=development
-ENV PATH=/opt/node_modules/.bin:$PATH
 WORKDIR /opt
 RUN npm install --only=development
-CMD ["nodemon", "--exec", "babel-node", "./src/bin/www"]
+ENV PATH /opt/node_modules/.bin:$PATH
+CMD ["npm", "run", "dev"]
 
 ## Stage 3 (production)
 FROM base as prod

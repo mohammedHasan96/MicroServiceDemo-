@@ -7,9 +7,9 @@ services:
       - 15672:15672
       - 5672:5672
     volumes:
-      - "./rabbitmq3-data:/var/lib/rabbitmq/mnesia/"
+      - "./data/rabbitmq3-data:/var/lib/rabbitmq/mnesia/"
   db:
-    image: postgres:13.2
+    image: postgres:12.6-alpine
     restart: always
     environment:
       - POSTGRES_PASSWORD=example
@@ -64,6 +64,10 @@ services:
     volumes:
       - ./client-react:/app
       - ./app/node_modules
+    depends_on:
+      - db
+      - rabbitmq3
+      - product-service
   basket-service:
     image: basket-service
     build:
